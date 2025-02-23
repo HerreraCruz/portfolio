@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import CardIndex from '../components/CardIndex.astro';
+import Social from '../components/Social.astro';
+import SkillCategory from '../components/SkillCategory.astro';
+
+import { Image } from 'astro:assets';
+
+import { socials, cards, skills } from '../content/data/db'
+---
+
+<Layout 
+  title="Erick Herrera - Software Dev"
+  description="Conoce a Erick Herrera, desarrollador de Software, entusiasta de la AI."
+>
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12">
+      <Image
+        src="/images/imagenPerfil.jpg"
+        alt="Erick Herrera"
+        width={200}
+        height={200}
+        class="rounded-full border-4 border-orange-500 mx-auto mb-6"
+      />
+      <h1 class="text-4xl font-bold">Erick Herrera</h1>
+      <p class="text-xl font-bold">herreracruz2401@gmail.com</p>
+      <p class="text-xl">Software Developer</p>
+    </div>
+
+    <div class="space-y-8">
+
+      {
+        cards.map((card, index) => (
+          <CardIndex
+            title={card.title}
+            title_en={card.title_en}
+            description={card.description}
+            description_en={card.description_en}
+          />
+        ))
+      }
+
+      <SkillCategory 
+        name="Habilidades"
+        name_en="Skills"
+        skills={skills}
+      />
+
+    </div>
+
+    <div class="mt-12 flex justify-center space-x-6">
+      {
+        socials.map((social, index) => (
+          <Social
+            name={social.name}
+            url={social.url}
+            icon={social.icon}
+          />
+        ))
+      }
+    </div>
+
+  </div>
+  <astro:head>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Erick Herrera",
+        "jobTitle": "Software Developer",
+        "description": "Profesionista en tecnología y especialista en herramientas educativas...",
+        "image": "https://erickherrera.dev/images/imagenPerfil.jpg",
+        "url": "https://erickherrera.dev/"
+      }
+    </script>
+  </astro:head>
+</Layout>
+

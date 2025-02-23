@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+---
+
+<header class="bg-gradient-to-br from-blue-900 to-blue-400 shadow-md p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <Image
+        src="/images/imagenPerfil.jpg"
+        alt="Uayeb Caballero"
+        width={50}
+        height={50}
+        class="rounded-full border-2 border-orange-500"
+      />
+      <div>
+        <h1 class="text-xl font-bold text-orange-800">Erick Herrera</h1>
+        <p class="text-sm text-gray-600">Software Developer</p>
+      </div>
+    </div>
+    <div class="flex items-center space-x-4">
+      <!-- <span class="bg-orange-100 text-orange-800 text-xs font-semibold px-2.5 py-0.5 rounded">EdTech</span>
+      <span class="bg-orange-100 text-orange-800 text-xs font-semibold px-2.5 py-0.5 rounded">Data Governance</span>
+      <span class="bg-orange-100 text-orange-800 text-xs font-semibold px-2.5 py-0.5 rounded">ML & GenIA</span> -->
+      <div class="flex items-center">
+        <span class="mr-2 text-sm font-medium text-gray-900">ES</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="languageToggle" class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+        </label>
+        <span class="ml-2 text-sm font-medium text-gray-900">EN</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import "../scripts/languageToggle.js";
+</script>
