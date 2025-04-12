@@ -70,10 +70,11 @@ export const navItems: ItemProps[] = [
       titleEn: 'Projects',
       href: '/projects',
       subitems: [
+        { titleEs: 'Plataforma de E-Commerce', titleEn: 'E-Commerce Platform', href: '/projects/commerce-platform' },
         { titleEs: 'Crowd Funding', titleEn: 'Crowd Funding', href: '/projects/crowd-funding' },
         { titleEs: 'Plataforma de Delivery', titleEn: 'Delivery Platform', href: '/projects/delivery-platform' },
         { titleEs: 'Plataforma de Taxis VIP', titleEn: 'VIP Taxi Platform', href: '/projects/taxi-platform' },
-        { titleEs: 'Plataforma de E-Commerce', titleEn: 'E-Commerce Platform', href: '/projects/commerce-platform' },
+        
       ]
     },
     { titleEs: 'Experiencia Laboral', titleEn: 'Work Experience', href: '/workexperience' },

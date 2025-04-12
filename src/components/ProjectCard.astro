@@ -10,8 +10,8 @@ export interface Props {
 const { title, description, icon, href, lang } = Astro.props;
 ---
 
-<a href={href} class="block" data-lang={lang} >
-  <div class="bg-gradient-to-br from-blue-900 to-blue-400 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+<a href={href} class="block" data-lang={lang}>
+  <div class="bg-gradient-to-br from-blue-900 to-blue-400 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out h-full flex flex-col justify-between">
     <div class="text-4xl mb-4">{icon}</div>
     <h3 class="text-xl font-semibold text-orange-900 mb-3">{title}</h3>
     <p class="text-gray-600">{description}</p>

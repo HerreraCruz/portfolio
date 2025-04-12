@@ -2,10 +2,21 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import ProjectCard from '../components/ProjectCard.astro';
+import { navItems } from '../content/data/db';
 
 type Project = CollectionEntry<'projects'> & { slug: string };
 
 const projects: Project[] = await getCollection('projects') as Project[];
+
+// Get the order of projects from the navbar
+const projectOrder = navItems.find(item => item.titleEn === 'Projects')?.subitems?.map(subitem => subitem.href.split('/').pop()) || [];
+
+// Sort projects based on the order in the navbar
+const sortedProjects = projects.sort((a, b) => {
+  const indexA = projectOrder.indexOf(a.slug);
+  const indexB = projectOrder.indexOf(b.slug);
+  return indexA - indexB;
+});
 ---
 
 <Layout 
