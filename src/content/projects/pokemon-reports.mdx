@@ -1,0 +1,86 @@
+---
+title: "Reportes Pokemon V2"
+description: "Evolución de App Generador de Reportes V1 desplegado en la Nube"
+
+title_en: "Pokemon Reports V2"
+description_en: "Reports Generator V1 Improvemets"
+
+
+
+icon: "📄"
+---
+
+# Description
+
+Este proyecto, PokeQueue, es una aplicación basada en FastAPI diseñada para gestionar solicitudes de generación de listas de Pokémon según su tipo, esto se plasma en la generación de un archivo CSV, en el interfaz de usuario se tiene una tabla de registros, un select para obtener y seleccionar el tipo de pokémon deseado, un campo input para indicar el número de pokémon que deseamos en nuestra lista, y el botón "Catch them all" para crear la solicitud hacia que llega al Backend en el servidor que se comunica con la base de datos y el Queue Storage y el Worker. 
+
+
+Su propósito es gestionar datos y flujos de procesamiento relacionados con Pokémon en un entorno escalable basado en la nube.
+
+# Arquitectura
+
+La arquitectura se integra con servicios de Azure, incluyendo Azure Container Registry para almacenar las imagenes generadas por Docker de la Ui y la API, Azure SQL Database para almacenamiento de datos, el App Service Plan que contiene las Function Apps de la Ui, la API y el Worker y Azure Storage Account que contiene el  Queue Storage para la gestión de colas de mensajes y el Blob Storage que maneja la creación de los archivos CSV.
+
+## Tecnologías Clave
+
+- Front-End : Next.js con JavaScript
+- Back-End : FastAPI con Python
+- Base de Datos : Azure SQL con SQL Server
+- Infraestructura : Terraform
+- Azure : ACR, APP Service Plan, Storage Account, Azure SQL
+
+# V2 Features
+
+## Eliminar Registros : 
+- Frontend (Next.js):
+  - Se Añadio un botón de "Eliminar" a cada fila de la tabla de reportes.
+  - se Implemento un dialog de confirmación antes de proceder con la eliminación.
+  - Al confirmar, realiza una llamada a la API backend para solicitar la eliminación.
+  - Actualiza la lista de reportes en la UI después de una eliminación exitosa.
+- Backend (API FastAPI):
+  - Se Creo un nuevo endpoint en la API e Implementa la lógica para: 
+■ Verificar que el reporte existe en Azure SQL DB. 
+■ Eliminar el archivo CSV correspondiente del contenedor en Azure Blob
+
+## Enriqucer Reporte :
+Se añadio  las estadísticas base (HP, Ataque, Defensa, Ataque Especial, Defensa Especial, Velocidad) y una habilidad de cada Pokémon al reporte CSV.
+- Worker (Azure Function - Python):
+  - Después de obtener la lista inicial de Pokémon para el tipo seleccionado, se itera sobre esa lista. ○ Para cada Pokémon en la lista, realiza una llamada adicional a la PokeAPI usando la URL específica de ese Pokémon para obtener sus detalles completos. 
+  - De la respuesta detallada de cada Pokémon, se extrae: Las estadísticas base 
+  - Se Maneja posibles errores si la llamada a la URL de un Pokémon específico falla.
+  - Se Modifico la función que genera el CSV : ■ se Añaden las nuevas columnas al DataFrame y al CSV para cada estadística base
+
+## Muestreo :
+Permite al usuario especificar un número máximo de registros aleatorios a incluir en el
+reporte.
+- Frontend (Next.js):
+  - Se Añadio un campo de entrada numérica en el formulario.
+- Backend (API FastAPI):
+  - Se Modificó el endpoint de creación para aceptar el nuevo parámetro. Actualiza el modelo Pydantic
+  - Almacena este valor en una nueva columna en la tabla de reportes en Azure SQL DB.
+- Worker (Azure Function - Python):
+  - Se Obtiene el sample size para el reporte que se está procesando.
+  - Después de obtener la lista completa de resultados de la API externa (PokeAPI), si se especificó un sample size válido y menor al total de resultados, se usa random.sample() para seleccionar aleatoriamente los registros.
+  - Se Genera el CSV usando la lista resultante.
+
+### Desafíos y Soluciones
+
+Crear el ambiente de desarrollo: se debe tener mucho cuidado al seleccionar de manera correcta los paquetes que serán utilizados en el ambiente en el cual se desee trabajar, verificar que sean compatibles entre versiones, y los lenguajes que se utilizarán.
+
+Levantar los servicios para probar el proyecto de manera local: Tener presente todos los procesos que engloban este proyecto, como ser el Frontend con Next.js, el backend con Fast Api y utilizando Uvicorn, la function app instalando drivers y herramientas para poder levantar el servicio en Windows, evitar interferencia entre puertos, etc.
+
+Dar seguimiento a la Lógica de la Solicitud: Debido a que el proyecto se encuentra muy bien estructurado y los métodos y funciones muchas veces se encuentran en archivos diferentes, y/o en carpetas diferentes, aunque ordenado se vuelve complejo dar seguiemiento al proceso de solicitud, por lo cual se debe ser ordenado al implementar nuevas funcionalidades e ir proyecto por proyecto, primero Frontend, luego Backend, etc. ampliando el uso de mensajes en las consolas para facilitar el debugging
+
+
+# Enlaces
+## Repositorios del Proyecto
+
+- [FrontEnd](https://github.com/HerreraCruz/pkm.queue.ui.git)
+- [BackEnd](https://github.com/HerreraCruz/pkm.queue.api.git)
+- [Worker](https://github.com/HerreraCruz/pkm.queue.function.git)
+- [Infraestructura](https://github.com/HerreraCruz/pkm.terraform.git)
+- [Scripts BD](https://github.com/HerreraCruz/pkm.queue.sql.git)
+
+## Aplicación Desplegada
+
+- [Pokequeue App](https://pokequeue-app.azurewebsites.net/)

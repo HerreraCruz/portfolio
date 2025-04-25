@@ -70,6 +70,7 @@ export const navItems: ItemProps[] = [
       titleEn: 'Projects',
       href: '/projects',
       subitems: [
+        { titleEs: 'Reportes Pokemon v2', titleEn: 'Pokemon Reports', href: '/projects/pokemon-reports' },
         { titleEs: 'Plataforma de E-Commerce', titleEn: 'E-Commerce Platform', href: '/projects/commerce-platform' },
         { titleEs: 'Crowd Funding', titleEn: 'Crowd Funding', href: '/projects/crowd-funding' },
         { titleEs: 'Plataforma de Delivery', titleEn: 'Delivery Platform', href: '/projects/delivery-platform' },

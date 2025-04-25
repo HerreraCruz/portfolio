@@ -24,3 +24,8 @@ th { @apply bg-orange-100 font-semibold; }
 body {
     @apply bg-blue-900;
   }
+
+  /* en tu archivo global.css o en tu componente MDX personalizado */
+ul ul {
+    margin-left: 1.5rem; /* o el valor que prefieras */
+  }
